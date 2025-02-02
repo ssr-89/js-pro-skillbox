@@ -1,0 +1,33 @@
+/*HEADER*/
+.header {
+  // position: fixed;
+  // top: 0;
+  // right: 0;
+  // left: 0;
+  // z-index: 1;
+  background-color: var(--light-green);
+  border-bottom: 1px solid var(--dark-green);
+  color: var(--dark-green);
+  .main-nav {
+    margin-bottom: 20px;
+  }
+  .main-menu {
+    flex-wrap: wrap;
+    &__link {
+      padding: 5px 10px;
+      border: 1px solid var(--dark-green);
+    }
+  }
+  .selected-item {
+    background-color: var(--dark-green);
+    color: var(--light-green);
+  }
+  .second-menu {
+    gap: 20px;
+    &__link {
+      &:hover {
+        color: var(--second-color);
+      }
+    }
+  }
+}

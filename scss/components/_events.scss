@@ -1,0 +1,17 @@
+/* EVENTS */
+.events {
+  &__box {
+    margin-bottom: 30px;
+  }
+  &__heading {
+    margin-bottom: 20px;
+  }
+  &-features {
+    margin-bottom: 20px;
+    &__item {
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
