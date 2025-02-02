@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS-PRO: события и контекст выполнения</title>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link href="css/styles.css" rel="stylesheet">
+  <script src="js/app.js" defer></script>
+</head>
+
+<body>
+  <div id="wrapper" class="wrapper">
+    <header id="header" class="header">
+      <div class="header__container">
+        <nav class="header__nav main-nav flex">
+          <ul class="header__menu list main-menu flex">
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="index.html">
+                <span class="main-menu__link-text">Главная</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link selected-item" href="#">
+                <span class="main-menu__link-text">События и контекст выполнения</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="modules.html">
+                <span class="main-menu__link-text">Модули</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="eventloop.html">
+                <span class="main-menu__link-text">Event&nbsp;loop и&nbsp;асинхронная&nbsp;разработка</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="processing.html">
+                <span class="main-menu__link-text">Обработка&nbsp;ошибок</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="classes.html">
+                <span class="main-menu__link-text">Классы</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Прототипы и&nbsp;конструкторы</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Экосистема JavaScript и&nbsp;npm</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Сборка</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Тестирование</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">База&nbsp;знаний</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <nav class="header__nav second-nav flex">
+          <ul class="header__menu list second-menu flex">
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#events">
+                <span class="second-menu__link-text">События и&nbsp;обработчики</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#this">
+                <span class="second-menu__link-text">Контекст выполнения, this в обработчиках</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#object-event">
+                <span class="second-menu__link-text">Объект события, всплытие и&nbsp;погружение</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#prevent">
+                <span class="second-menu__link-text">Методы preventDefault и stopPropagation</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="main">
+      <section id="hero" class="hero">
+        <div class="hero__container" style="display: none;">
+          <h1 class="hero__title">JavaScript PRO от Skillbox</h1>
+        </div>
+      </section>
+      <section id="events" class="events">
+        <div class="events__container">
+          <h2 class="events__title">События и&nbsp;обработчики</h2>
+          <div class="events__box">
+            <p class="events__desc">
+              <strong>Событие</strong>&nbsp;&mdash; это сообщение браузера о&nbsp;том, что что-то произошло.
+            </p>
+            <p class="events__desc">
+              <strong>Обработчик события</strong>&nbsp;&mdash; функция, которую вызовет браузер, когда событие произошло.
+            </p>
+            <p class="events__desc">
+              <strong>DOMContentLoaded</strong>&nbsp;&mdash; когда HTML загружен и&nbsp;обработан, DOM документа полностью построен и&nbsp;доступен.
+            </p>
+            <p class="events__desc">
+              <strong>transitionend</strong>&nbsp;&mdash; когда CSS-анимация завершена.
+            <pre>
+const box = document.querySelector('.box');
+const button = document.querySelector('button');
+
+button.addEventListener('click', () =&gt; {
+    box.classList.toggle('active'); <i>// Переключение класса</i>
+});
+
+box.addEventListener('transitionend', () =&gt; {
+    console.log('Transition completed!'); <i>// Действие после завершения перехода</i>
+});
+              </pre>
+            </p>
+          </div>
+          <div class="events__box">
+            <h3 class="events__heading">Виды обработчиков событий:</h3>
+            <p class="events__desc">1. Обработчик JS</p>
+            <ol class="events__list events-list">
+              <li class="events-list__item">
+                <p class="events-list__desc">
+                  Метод <strong>addEventListener</strong> позволяет добавлять несколько обработчиков на&nbsp;одно событие одного элемента.
+                </p>
+                <p class="events-list__desc">
+                  Также <strong>addEventListener</strong> поддерживает объекты в&nbsp;качестве обработчиков событий, например, <strong>handleEvent</strong>.
+                </p>
+                <p class="events-list__desc">
+                  <strong>element.addEventListener(event, handler, [options]);</strong>
+                </p>
+                <p class="events-list__desc">
+                  <strong>event</strong> - имя события, например click.
+                </p>
+                <p class="events-list__desc">
+                  <strong>handler</strong> - ссылка на функцию-обработчик.
+                </p>
+                <p class="events-list__desc">
+                  <strong>options</strong> - дополнительный объект со&nbsp;свойствами:
+                </p>
+                <ul class="events-list__features events-features">
+                  <li class="events-features__item">
+                    once: если true, тогда обработчик будет автоматически удалён после выполнения.
+                  </li>
+                  <li class="events-features__item">
+                    capture: фаза, на&nbsp;которой должен сработать обработчик, подробнее об&nbsp;этом будет рассказано в&nbsp;главе <a href="https://learn.javascript.ru/bubbling-and-capturing" target="_blank">Всплытие и&nbsp;погружение</a>. Так исторически сложилось, что options может быть false/true, это то&nbsp;же самое, что {capture: false/true}.
+                  </li>
+                  <li class="events-features__item">
+                    passive: если true, то&nbsp;указывает, что обработчик никогда не&nbsp;вызовет preventDefault(), подробнее об&nbsp;этом будет рассказано в&nbsp;главе <a href="https://learn.javascript.ru/default-browser-action" target="_blank">Действия браузера по&nbsp;умолчанию</a>.
+                  </li>
+                </ul>
+              </li>
+              <li class="events-list__item">
+                <code>document.querySelector("button”).addEventListener("click", () =&gt; {});</code> <i>// обработчик click на кнопке</i>
+              </li>
+              <li class="events-list__item">
+                <code>window.addEventListener("resize", () =&gt; {});</code> <i>// обработчик resize на окне браузера (window) – когда размеры окна изменяются.</i>
+              </li>
+              <li class="events-list__item">
+                <code>document.addEventListener("DOMContentLoaded", () =&gt; {});</code> <i>// обработчик DOMContentLoaded на документы.</i>
+              </li>
+            </ol>
+          </div>
+          <div class="events__box">
+            <p class="events__desc">2. Обработчик HTML</p>
+            <p class="events__desc">
+              <i>&lt;!&mdash;атрибут onclick содержит код, обрабатывающий событие click &mdash;&mdash;&gt;</i>
+            </p>
+            <p class="events__desc">
+              <code>
+                &lt;button onclick="alert(this.innerHTML)"&gt;Нажми меня&lt;/button&gt;
+              </code>
+            </p>
+            <p class="events__desc">
+              <code>&lt;input oninput="onInput()"&gt;</code> <i>&lt;!&mdash; функция прописывается со скобками и только глобальная функция.&mdash;&mdash;&gt;</i>
+            </p>
+          </div>
+          <div class="events__box">
+            <p class="events__desc">3. Обработчик HTML + JS</p>
+            <p class="events__desc">
+              <code>const btn = document.querySelector(&quot;button&quot;);</code>
+            </p>
+            <p class="events__desc">
+              <code>function onClick(){};</code>
+            </p>
+            <p class="events__desc">
+              <code>btn.onclick = onClick;</code> <i>&lt;!&mdash; функция прописывается без скобок.&mdash;&mdash;&gt;</i>
+            </p>
+            <pre>
+btn.onclick = function(event) {
+  <i>// вывести тип события, элемент и координаты клика</i>
+  alert(event.type + " на " + event.currentTarget); <i>// click на [object HTMLButtonElement]</i>
+  alert("Координаты: " + event.clientX + ":" + event.clientY); <i>// Координаты: 24:19</i>
+};
+            </pre>
+            <p class="events__desc">
+              Некоторые свойства объекта event:
+            </p>
+            <p class="events__desc">
+              <strong>event.type</strong> &mdash;&nbsp;тип события, в данном случае "click".
+            </p>
+            <p class="events__desc">
+              <strong>event.currentTarget</strong> &mdash;&nbsp;элемент, на&nbsp;котором сработал обработчик. Значение&nbsp;&mdash; обычно такое&nbsp;же, как и&nbsp;у&nbsp;this, но&nbsp;если обработчик является функцией-стрелкой или при помощи bind привязан другой объект в&nbsp;качестве this, то&nbsp;мы&nbsp;можем получить элемент из&nbsp;event.currentTarget.
+            </p>
+            <p class="events__desc">
+              <strong>event.clientX / event.clientY</strong> &mdash;&nbsp;координаты курсора в&nbsp;момент клика относительно окна, для событий мыши.
+            </p>
+            <p class="events__desc">
+              Есть также и&nbsp;ряд других свойств, в&nbsp;зависимости от&nbsp;типа событий, которые мы&nbsp;разберём в&nbsp;дальнейших главах
+            </p>
+            <p class="events__desc">
+              <code>function onScroll(){};</code>
+            </p>
+            <p class="events__desc">
+              <code>window.onscroll = onScroll;</code> &mdash;&nbsp;функция прописывается без скобок.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section id="this" class="this bg-color">
+        <div class="this__container">
+          <h2 class="this__titl ">Контекст выполнения, this в обработчиках</h2>
+          <p class="this__desc">
+            <i>// window доступен всегда и везде, он задаёт глобальный контекст
+              console.log(window);</i>
+          </p>
+          <p class="this__desc">
+            <i>// блок кода</i>
+          </p>
+          <pre>
+{
+  <i>// не сработает, переменная x объявлена ниже и до объявления не является часть контекста выполнения</i>
+  console.log(x); // не сработает
+
+  let x = 10;
+
+  <i>// x стал частью контекста</i>
+  console.log(x);
+
+  {
+    <i>// вложенный блок, где x тоже доступен</i>
+    console.log(x);
+  }
+}
+          </pre>
+          <p class="this__desc">
+            <i>// а&nbsp;вот за&nbsp;пределами блока, в&nbsp;котором мы&nbsp;объявили переменную&nbsp;x</i>
+          </p>
+          <p class="this__desc">
+            <i>// Она уже не&nbsp;является частью контекста, поэтому обратиться к&nbsp;ней не&nbsp;получится</i>
+          </p>
+          <p class="this__desc">
+            <code>console.log(x);</code> <i>// не сработает.</i>
+          </p>
+          <br>
+          <strong class="this__desc desc">Пример this:</strong>
+          <pre>
+const me = {
+  name: "Тимофей",
+  whoAmI() {
+    <i>// this – объект (me), в котором находится метод whoAmI</i>
+    console.log(this.name);
+  }
+}
+          </pre>
+          <p class="this__desc">
+            <i>// можно сказать, что перед вызовом метода объекта мы&nbsp;присваиваем</i>
+          </p>
+          <p class="this__desc">
+            <i>// к this объект, указанный до точки, то есть me</i>
+          </p>
+          <p class="this__desc">
+            <code>me.whoAmI();</code> <i>// "Тимофей"</i>
+          </p>
+          <br>
+          <p class="this__desc">
+            <i>// это просто функция, она не&nbsp;является методом объекта</i>
+          </p>
+          <pre>
+function logThis() {
+  console.log(this);
+}
+          </pre>
+          <p class="this__desc">
+            <i>// По&nbsp;умолчанию this будет равен глобальному объекту window, но&nbsp;не&nbsp;спешите этим пользоваться!</i>
+          </p>
+          <p class="this__desc">
+            <i>// Во-первых, вы&nbsp;вполне успешно можете работать с&nbsp;window напрямую,</i>
+          </p>
+          <p class="this__desc">
+            <i>// а&nbsp;во-вторых, this может быть изменён, из-за чего код перестанет работать</i>
+          </p>
+          <p class="this__desc">
+            <code>logThis();</code>
+          </p>
+          <br>
+          <p class="this__desc">
+            <i>// у&nbsp;всех функций есть специальные методы call, apply и&nbsp;bind</i>
+          </p>
+          <p class="this__desc">
+            <i>// Методы call, apply и bind в&nbsp;JavaScript используются для изменения контекста выполнения функции, т.е. для указания, какой объект будет использован в&nbsp;качестве `this` внутри функции.</i>
+          </p>
+          <p class="this__desc">
+            <i>// *call и&nbsp;apply* полезны, когда нужно временно изменить контекст функции и&nbsp;сразу её&nbsp;вызвать;</i>
+          </p>
+          <p class="this__desc">
+            <i>// *bind* используется, когда нужно создать новую функцию с&nbsp;определённым контекстом для последующего вызова.</i>
+            <br>
+            <i>// Это особенно актуально при передаче функций как обратных вызовов (callback functions)</i>
+            <br>
+            <i>// или при использовании в&nbsp;обработчиках событий.</i>
+          </p>
+          <p class="this__desc">
+            <i>// Метод call просто вызывает функцию со&nbsp;значением this, которое мы&nbsp;передаём первым аргументом.</i>
+          </p>
+          <p class="this__desc">
+            <code>logThis.call(42);</code> <i>// 42</i>
+          </p>
+          <br>
+          <p class="this__desc">
+            <i>// Возможно переопределить this для методов уже сформированных объектов</i>
+          </p>
+          <pre>
+const me = {
+  name: "Тимофей",
+  whoAmI() {
+    console.log(this.name);
+  }
+};
+
+const notMe = {
+  name: "Не Тимофей",
+};
+
+me.whoAmI(); // “Тимофей”
+
+<i>// Подменяем this с помощью call.</i>
+me.whoAmI.call(notMe); // Не Тимофей
+          </pre>
+          <br>
+          <p class="this__desc">
+            <i>// this не работает в стрелочных функциях</i>
+          </p>
+          <p class="this__desc">
+            <i>// стрелочные функции всегда берут this из родительской области видимости,</i>
+          </p>
+          <p class="this__desc">
+            <i>// что бы с ними не делали.</i>
+          </p>
+          <br>
+          <p class="this__desc">
+            <i>// функция, которая будет обработчиком события click по&nbsp;кнопке.</i>
+          </p>
+          <p class="this__desc">
+            <i>// сами кнопки создаём ниже.</i>
+          </p>
+          <pre>
+function onButtonClick() {
+  <i>// счётчик, просто увеличивает число в textContent на единицу</i>
+  this.textContent = String(Number(this.textContent) + 1);
+  <i>// вместо this можно прописать event.target, а параметров указать event</i>
+}
+          </pre>
+          <br>
+          <pre>
+<i>// Создаём несколько кнопок и к каждой из них привязываем обработчик</i>
+for (let i = 0; i &lt; 5; ++i) {
+  const btn = document.createElement("button");
+  btn.textContent = "1";
+  document.body.append(btn);
+  btn.onclick = onButtonClick;
+}
+          </pre>
+          <p class="this__desc">
+            <i>// внутри обработчика this будет DOM элементом того объекта, к&nbsp;которому привязан обработчик.</i>
+          </p>
+          <p class="this__desc">
+            <i>// Это значит, что у&nbsp;каждой кнопки, хоть и&nbsp;один и&nbsp;тот&nbsp;же обработчик, this будет разным.</i>
+          </p>
+          <p class="this__desc">
+            <i>// И&nbsp;он&nbsp;будет равен той кнопке, на&nbsp;которую нажал пользователь.</i>
+          </p>
+          <p class="this__desc">
+            <i>// Таким образом на&nbsp;каждой кнопке получился свой счётчик нажатий.</i>
+          </p>
+        </div>
+      </section>
+      <section id="object-event" class="object-event">
+        <div class="object-event__container">
+          <h2 class="object-event__title">Объект события, всплытие и&nbsp;погружение</h2>
+          <pre>
+document.body.addEventListener('mousemove', function(event) {
+  <i>// this - &lt;body&gt;</i>
+  console.log(this); <i>// &lt;body&gt;…&lt;/body&gt;</i>
+  <i>// event - объект события</i>
+  console.log(event); <i>// MouseEvent {isTrusted: true, screenX: 157, screenY: 721, clientX: 109, clientY: 621, …}</i>
+})
+          </pre>
+          <br>
+          <p class="object-event__desc">
+            <i>// Показываем, какую кнопку нажимает пользователь</i>
+          </p>
+          <pre>
+document.addEventListener('keyup', function(event){
+  <i>// key - свойство объекта события, название нажатой на клавиатуре кнопки</i>
+  console.log('Нажата кнопка', event.key);
+});
+          </pre>
+          <br>
+          <br>
+          <strong>Погружение и&nbsp;всплытие</strong>
+          <br>
+          <strong>HTML</strong>
+          <pre>
+&lt;div id="top"&gt;
+  &lt;ul id="list"&gt;
+    &lt;li id="item"&gt;
+      Элемент с обработчиком
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+            </pre>
+          <br>
+          <strong>JS</strong>
+          <pre>
+["top", "list", "item"].forEach((id) =&gt; {
+  const e = document.getElementById(id);
+  e.addEventListener("click",(event) =&gt; {
+      console.log("Погружаюсь...", id);
+    },
+    { capture: true } <i>// регистрирует фазу погружения. Без него браузер игнорирует фазу погружения</i>
+  );
+  e.addEventListener("click", (event) =&gt; {
+      console.log("Всплываю...", id);
+    },
+    { capture: false }
+  );
+});
+            </pre>
+          <br>
+          <strong>Удаление обработчика события</strong>
+          <pre>
+function onMouseMove() {}
+
+<i>// document.body.addEventListener('mousemove', onMouseMove, {capture: true});</i>
+<i>// document.body.addEventListener('mousemove', onMouseMove, true);</i>
+document.body.addEventListener('mousemove', onMouseMove);
+
+<i>// ...убираем обработчики</i>
+
+<i>// document.body.removeEventListener('mousemove', onMouseMove, {capture: true});</i>
+<i>// document.body.removeEventListener('mousemove', onMouseMove, true);</i>
+document.body.removeEventListener('mousemove', onMouseMove);
+          </pre>
+          <br>
+          <pre>
+btn.addEventListener('click', event =&gt; {
+  <i>// Элемент, на котором сработал обработчик (элемент, на котором остановлен обработчик события)</i>
+  event.currentTarget; <i>// === this – это button</i>
+  <i>// Элемент, породивший событие (содержит элемент, на котором произошло событие)</i>
+  event.target; <i>// элемент внутри button, на котором произошёл клик</i>
+});
+          </pre>
+          <br>
+          <p class="object-event__desc">
+            <strong>event.stopPropagation()</strong> – данный метод останавливает всплытие на последующие обработчики.
+          </p>
+          <p class="object-event__desc">
+          <pre>
+&lt;body onclick="alert(`сюда всплытие не дойдёт`)"&gt;
+  &lt;button onclick="<strong>event.stopPropagation()</strong>"&gt;Кликни меня&lt;/button&gt;
+&lt;/body&gt;
+          </pre>
+          </p>
+          <p class="object-event__desc">
+            <strong>event.stopImmediatePropagation()</strong> - он не только предотвращает всплытие, но и останавливает обработку событий на текущем элементе.
+          </p>
+        </div>
+      </section>
+      <section id="prevent" class="prevent bg-color">
+        <div class="prevent__container">
+          <h2 class="prevent__title">Методы preventDefault и stopPropagation</h2>
+          <div class="prevent__box">
+            <h3 class="prevent__heading">preventDefault()</h3>
+            <pre>
+<strong>HTML</strong>
+&lt;form id="name-form"&gt;
+  &lt;input type="text" name="name" placeholder="Введите ваше имя"&gt;
+  &lt;br&gt;
+  &lt;button&gt;Подтвердить&lt;/button&gt;
+  &lt;p id="name-display"&gt;&lt;/p&gt;
+&lt;/form&gt;              
+            </pre>
+            <br>
+            <pre>
+<strong>JS</strong>
+document.getElementById('name-form').addEventListener('submit', event =&gt; {
+  event.preventDefault();
+  document.getElementById('name-display').textContent=`Ваше имя:`${event.target.elements[0].value}`;
+});
+            </pre>
+          </div>
+          <br>
+          <div class="prevent__box">
+            <h3 class="prevent__heading">
+              stopPropagation()
+            </h3>
+            <p class="prevent__desc">
+              Данный метод останавливает всплытие/погружение на&nbsp;последующие обработчики.
+            </p>
+            <pre>
+<strong>HTML</strong>
+&lt;div id="top"&gt;
+  &lt;div id="list"&gt;
+    &lt;div id="item"&gt;
+      Элемент с обработчиком
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+            </pre>
+            <br>
+            <pre>
+<strong>JS</strong>
+['top', 'list', 'item'].forEach(id =&gt; {
+  const element = document.getElementById(id);
+  element.addEventListener('click', event =&gt; {
+    <i>// event.stopPropagation();</i>
+    console.log('Погружаюсь...', event.currentTarget);
+  }, {
+    capture: true
+  });
+  element.addEventListener('click', event =&gt; {
+    <i>// event.stopPropagation();</i>
+    console.log('Всплываю...', event.currentTarget);
+  }, {
+    capture: false
+  });
+});
+            </pre>
+          </div>
+          <br>
+          <div class="prevent__box">
+            <h3 class="prevent__heading">
+              stopImmediatePropagation()
+            </h3>
+            <p class="prevent__desc">
+              Данный метод не&nbsp;только предотвращает всплытие, но&nbsp;и&nbsp;останавливает обработку событий на&nbsp;текущем элементе.
+            </p>
+            <pre>
+<strong>HTML</strong>
+&lt;div id="top"&gt;
+  &lt;div id="list"&gt;
+    &lt;div id="item"&gt;
+      Элемент с обработчиком
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+            </pre>
+            <br>
+            <pre>
+<strong>JS</strong>
+['top', 'list', 'item'].forEach(id =&gt; {
+  const element = document.getElementById(id);
+  element.addEventListener('click', event =&gt; {
+    <i>// event.stopImmediatePropagation();</i>
+    console.log('Погружаюсь...', event.currentTarget);
+  }, {
+    capture: true
+  });
+  element.addEventListener('click', event =&gt; {
+    <i>// event.stopImmediatePropagation();</i>
+    console.log('Всплываю...', event.currentTarget);
+  }, {
+    capture: false
+  });
+});
+            </pre>
+          </div>
+          <br>
+          <div class="prevent__box">
+            <h3 class="prevent__heading">Как поймать событие input</h3>
+            <pre>
+<strong>HTML</strong>
+&lt;div class="container"&gt;
+  &lt;input type="password" placeholder="Введи пароль, не ссы!" class="form-input"&gt;
+&lt;/div&gt;
+            </pre>
+            <br>
+            <pre>
+<strong>JS</strong>
+window.addEventListener('input', event =&gt; {
+  console.log(event.target.value);
+}, {capture: true});
+            </pre>
+          </div>
+          <br>
+          <div class="prevent__box">
+            <h3 class="prevent__heading">Практика preventDefault()</h3>
+            <pre>
+<strong>HTML</strong>
+&lt;div class="container"&gt;
+  &lt;input id="input" type="text" placeholder="Введите qwerty" class="form-input"&gt;
+&lt;/div&gt;
+            </pre>
+            <br>
+            <pre>
+<strong>JS</strong>
+const input = document.getElementById('input');
+const expectedString = 'qwerty';
+
+input.addEventListener("keypress", event =&gt; {
+  const newValue = event.target.value + event.key; // key - свойство объекта события, название нажатой на клавиатуре кнопки
+  if (newValue === expectedString) {
+    alert("Вы закончили упражнение!");
+  } else if (!expectedString.startsWith(newValue)) {
+    event.preventDefault();
+  }
+});
+            </pre>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer__container">
+        <p class="footer__text">© SSR</p>
+      </div>
+    </footer>
+    <a href="#top" id="back-to-top" class="back-to-top link" title="Back to top">▲</a>
+  </div>
+</body>
+
+</html>

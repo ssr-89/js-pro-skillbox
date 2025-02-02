@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS-PRO: модули</title>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link href="css/styles.css" rel="stylesheet">
+  <script src="js/app.js" defer></script>
+</head>
+
+<body>
+  <div id="wrapper" class="wrapper">
+    <header id="header" class="header">
+      <div class="header__container">
+        <nav class="header__nav main-nav flex">
+          <ul class="header__menu list main-menu flex">
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="index.html">
+                <span class="main-menu__link-text">Главная</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="events.html">
+                <span class="main-menu__link-text">События и контекст выполнения</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link selected-item" href="#">
+                <span class="main-menu__link-text">Модули</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="eventloop.html">
+                <span class="main-menu__link-text">Event&nbsp;loop и&nbsp;асинхронная&nbsp;разработка</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="processing.html">
+                <span class="main-menu__link-text">Обработка&nbsp;ошибок</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="classes.html">
+                <span class="main-menu__link-text">Классы</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Прототипы и&nbsp;конструкторы</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Экосистема JavaScript и&nbsp;npm</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Сборка</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Тестирование</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">База&nbsp;знаний</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <nav class="header__nav second-nav flex">
+          <ul class="header__menu list second-menu flex">
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#hero">
+                <span class="second-menu__link-text">Модули</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#intro">
+                <span class="second-menu__link-text">Введение в модули</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#footer">
+                <span class="second-menu__link-text">Контакты</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="main">
+      <section id="hero" class="hero">
+        <div class="hero__container">
+          <h1 class="hero__title">Модули</h1>
+          <ol class="hero__list hero-list">
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">Что такое модуль?</span>
+            </li>
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">Синтаксис import/export</span>
+            </li>
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">Особенности модулей</span>
+            </li>
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">Причины и способы деления кода на модули на примерах</span>
+            </li>
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">localStorage</span>
+            </li>
+          </ol>
+          <ul class="hero__list hero-list">
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">Загрузка модулей из других источников</span>
+            </li>
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">Код модуля запускается один раз</span>
+            </li>
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">Код запускается после прогрузки DOM</span>
+            </li>
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">Изолированная область видимости</span>
+            </li>
+            <li class="hero-list__item">
+              <span class="hero-list__item-text">Строгий режим «use strict»</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section id="intro" class="intro bg-color">
+        <div class="intro__container">
+          <h2 class="intro__title">Введение в модули</h2>
+          <div class="intro__box">
+            <h3 class="intro__heading">Подключение</h3>
+            <p class="intro__text">helpers.js</p>
+            <pre class="intro__pre">
+export function getWindowSize() {
+  return {
+    height: window.innerHeight,
+    width: window.innerWidth
+  }
+}
+          </pre>
+            <br>
+            <p class="intro__text">size-tracker.js</p>
+            <pre class="intro__pre">
+import { getWindowSize } from "./helpers.js";
+
+console.log('Размер окна', getWindowSize());
+            </pre>
+          </div>
+          <br><br>
+          <div class="intro__box">
+            <h3 class="intro__heading">export default</h3>
+            <p class="intro__text">syntax.js</p>
+            <pre class="intro__pre">
+function fn() { }
+const Constant = '';
+let Variable = '';
+
+export { fn as SuperFunction, Constant, Variable }
+
+<strong>export default () =&gt; {}</strong>
+            </pre>
+            <p class="intro__text">import-syntax.js</p>
+            <pre class="intro__pre">
+import { SuperFunction, Constant as C } from "./js/syntax.js";
+<i>// переименовать необходимо, чтобы не было конфликтов импортируемых имён</i>
+
+import <strong>SomeFunction</strong> from './js/syntax.js' <i>// импортирует default из syntax.js</i>
+
+<i>// import SomeFunction, { SuperFunction, Constant as C } from "./js/syntax.js"; - чтобы импортировать всё сразу вначале прописывается дефолтная функция, потом именованные</i>
+
+SuperFunction();
+console.log(C);
+<strong>SomeFunction();</strong>
+            </pre>
+          </div>
+          <div class="intro__box"></div>
+          <p class="intro__text"></p>
+          <p class="intro__text"></p>
+        </div>
+      </section>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer__container">
+        <p class="footer__text">© SSR</p>
+      </div>
+    </footer>
+    <a href="#top" id="back-to-top" class="back-to-top link" title="Back to top">▲</a>
+  </div>
+</body>
+
+</html>

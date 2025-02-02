@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS-PRO Skillbox</title>
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link href="css/styles.css" rel="stylesheet">
+  <script src="js/app.js" defer></script>
+</head>
+
+<body>
+  <div id="wrapper" class="wrapper">
+    <header id="header" class="header">
+      <div class="header__container">
+        <nav class="header__nav main-nav flex">
+          <ul class="header__menu list main-menu flex">
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="index.html">
+                <span class="main-menu__link-text">Главная</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="events.html">
+                <span class="main-menu__link-text">События и контекст выполнения</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="modules.html">
+                <span class="main-menu__link-text">Модули</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="eventloop.html">
+                <span class="main-menu__link-text">Event&nbsp;loop и&nbsp;асинхронная&nbsp;разработка</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="processing.html">
+                <span class="main-menu__link-text">Обработка&nbsp;ошибок</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link selected-item" href="#">
+                <span class="main-menu__link-text">Классы</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Прототипы и&nbsp;конструкторы</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Экосистема JavaScript и&nbsp;npm</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Сборка</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Тестирование</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">База&nbsp;знаний</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <nav class="header__nav second-nav flex">
+          <ul class="header__menu list second-menu flex">
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#definition">
+                <span class="second-menu__link-text">Определение класса</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#constructor">
+                <span class="second-menu__link-text">Конструктор</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#methods">
+                <span class="second-menu__link-text">Методы</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#setget">
+                <span class="second-menu__link-text">Сеттеры и геттеры</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#inheritance">
+                <span class="second-menu__link-text">Наследование</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#static">
+                <span class="second-menu__link-text">Статические методы</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a href="#instanceof" class="second-menu__link link">
+                instanceof - оператор
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a href="#members" class="second-menu__link link">
+                Члены класса
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="main">
+      <section id="classes" class="classes">
+        <div class="classes__container">
+          <div class="block">
+            <h1>Что такое классы?</h1>
+            <h2>Основные характеристики классов</h2>
+            <ol>
+              <li id="definition">
+                <h3>Определение класса</h3>
+                <p>
+                  Классы определяются с помощью ключевого слова class.
+                </p>
+                <p>
+                  Например:
+                </p>
+                <pre>
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+      
+  speak() {
+    console.log(`${this.name} издает звук.`);
+  }
+}
+                </pre>
+                <h4>Экземпляры класса</h4>
+                <p>
+                  Для создания экземпляра (объекта) класса используется оператор <code>new</code>:
+                </p>
+                <pre>
+const animal = new Animal('Собака');
+animal.speak(); <i>// Вывод: "Собака издает звук."</i>
+                </pre>
+                <br>
+                <h4>Встроенные классы в JavaScript:</h4>
+                <code>Date, Promise, Error, SyntaxError, TypeError</code>
+                <br><br>
+                <h4>Пример:</h4>
+                <p class="codepen" data-height="550" data-default-tab="js" data-slug-hash="MYgezVY" data-pen-title="classes: свойства" data-editable="true" data-user="archicolt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="https://codepen.io/archicolt/pen/MYgezVY">
+                      classes: свойства</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+              </li>
+              <li id="constructor">
+                <h3>Конструктор</h3>
+                <p>
+                  Конструктор - это специальный метод, который вызывается при создании экземпляра класса.
+                </p>
+                <p>
+                  В этом методе можно задать начальные значения для свойств объекта.
+                </p>
+                <p class="codepen" data-height="500" data-default-tab="js" data-slug-hash="gbYMamj" data-pen-title="classes: constructor" data-editable="true" data-user="archicolt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="https://codepen.io/archicolt/pen/gbYMamj">
+                      classes: constructor</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+              </li>
+              <li id="methods">
+                <h3>Методы</h3>
+                <p>
+                  Методы класса могут быть определены внутри класса. Они не требуют ключевого слова <code>function</code>.
+                </p>
+                <p class="codepen" data-height="1230" data-default-tab="js" data-slug-hash="VYZjeqo" data-pen-title="classes: методы" data-editable="true" data-user="archicolt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="https://codepen.io/archicolt/pen/VYZjeqo">
+                      classes: методы</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+              </li>
+              <li id="setget">
+                <h3>Сеттеры и геттеры</h3>
+                <p class="codepen" data-height="1050" data-default-tab="js" data-slug-hash="pvzbjKJ" data-pen-title="classes: сеттеры и геттеры" data-editable="true" data-user="archicolt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="https://codepen.io/archicolt/pen/pvzbjKJ">
+                      classes: сеттеры и геттеры</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+              </li>
+              <li id="inheritance">
+                <h3>Наследование</h3>
+                <p>
+                  JavaScript поддерживает наследование через классы с помощью ключевого слова <code>extends</code>. При этом дочерний класс может переопределять методы родительского класса и добавлять свои собственные.
+                </p>
+                <p class="codepen" data-height="1500" data-default-tab="js" data-slug-hash="ZYzpVyB" data-pen-title="classes: наследование" data-editable="true" data-user="archicolt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="https://codepen.io/archicolt/pen/ZYzpVyB">
+                      classes: наследование</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+                <hr>
+                <p class="codepen" data-height="510" data-default-tab="js" data-slug-hash="LEPxxmG" data-pen-title="classes: наследование (skillbox)" data-editable="true" data-user="archicolt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="https://codepen.io/archicolt/pen/LEPxxmG">
+                      classes: наследование (skillbox)</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+              </li>
+              <li id="static">
+                <h3>Статические выводы</h3>
+                <p>
+                  С помощью ключевого слова <code>static</code> можно создавать методы, которые принадлежат классу, а не его экземплярам:
+                </p>
+                <strong>Вариант №1</strong>
+                <p class="codepen" data-height="270" data-default-tab="js" data-slug-hash="YPKWyNY" data-pen-title="classes: статическое свойство" data-editable="true" data-user="archicolt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="https://codepen.io/archicolt/pen/YPKWyNY">
+                      classes: статическое свойство</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+                <br>
+                <strong>Вариант №2</strong>
+                <p class="codepen" data-height="550" data-default-tab="js" data-slug-hash="KwPWEYe" data-pen-title="classes: static" data-editable="true" data-user="archicolt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="https://codepen.io/archicolt/pen/KwPWEYe">
+                      classes: static</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+                <br>
+                <strong>Вариант №3</strong>
+                <pre>
+class MathHelper {
+  static add(a, b) {
+    return a + b;
+  }
+}
+
+console.log(MathHelper.add(5, 3)); <i>// Вывод: 8</i>
+                </pre>
+              </li>
+              <li id="instanceof">
+                <p style="width: 50%; line-height: 1.5;">
+                  <strong>instanceof</strong>&nbsp;&mdash; это оператор в&nbsp;JavaScript, который используется для проверки, является&nbsp;ли объект экземпляром определённого конструктора или класса. Он&nbsp;позволяет определить, принадлежит&nbsp;ли объект определённому типу (или классу) на&nbsp;основании его прототипного наследования.
+                </p>
+                <p class="codepen" data-height="1200" data-default-tab="js" data-slug-hash="ZYzKXKW" data-pen-title="classes: instanceof " data-editable="true" data-user="archicolt" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="https://codepen.io/archicolt/pen/ZYzKXKW">
+                      classes: instanceof </a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+      <section id="members" class="members">
+        <div class="members__container">
+          <h2>Члены класса</h2>
+          <p>
+            Свойства&nbsp;&mdash; значения, связанные с&nbsp;объектом.
+          </p>
+          <p>
+            Методы&nbsp;&mdash; операции, которые можно производить над объектом.
+          </p>
+          <p>
+            Геттеры/сеттеры&nbsp;&mdash; методы, которые выглядят как свойства. Выполняются при получении (геттеры) и&nbsp;присвоении (сеттеры) значения как в&nbsp;свойство объекта.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer__container">
+        <a href="./primer.html">PRIMER</a>
+        <p class="footer__text">© SSR</p>
+      </div>
+    </footer>
+    <a href="#top" id="back-to-top" class="back-to-top link" title="Back to top">▲</a>
+  </div>
+  <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+</body>
+
+</html>

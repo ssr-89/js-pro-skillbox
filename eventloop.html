@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS-PRO: Event loop</title>
+  <link type="image/x-icon" href="img/favicon.ico" rel="shortcut icon">
+  <link href="css/styles.css" rel="stylesheet">
+  <script src="js/app.js" defer></script>
+</head>
+
+<body>
+  <div id="wrapper" class="wrapper">
+    <header id="header" class="header">
+      <div class="header__container">
+        <nav class="header__nav main-nav flex">
+          <ul class="header__menu list main-menu flex">
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="index.html">
+                <span class="main-menu__link-text">Главная</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="events.html">
+                <span class="main-menu__link-text">События и контекст выполнения</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="modules.html">
+                <span class="main-menu__link-text">Модули</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link selected-item" href="#">
+                <span class="main-menu__link-text">Event&nbsp;loop и&nbsp;асинхронная&nbsp;разработка</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="processing.html">
+                <span class="main-menu__link-text">Обработка&nbsp;ошибок</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="classes.html">
+                <span class="main-menu__link-text">Классы</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Прототипы и&nbsp;конструкторы</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Экосистема JavaScript и&nbsp;npm</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Сборка</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">Тестирование</span>
+              </a>
+            </li>
+            <li class="main-menu__item flex">
+              <a class="main-menu__link link" href="#">
+                <span class="main-menu__link-text">База&nbsp;знаний</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <nav class="header__nav second-nav flex">
+          <ul class="header__menu list second-menu flex">
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#set">
+                <span class="second-menu__link-text">setTimeout/setInterval</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#async">
+                <span class="second-menu__link-text">async await</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#promise">
+                <span class="second-menu__link-text">Promise</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#promiseall">
+                <span class="second-menu__link-text">Promise.all</span>
+              </a>
+            </li>
+            <li class="second-menu__item">
+              <a class="second-menu__link link" href="#event">
+                <span class="second-menu__link-text">Event loop</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="main">
+      <section id="hero" class="hero">
+        <div class="hero__container">
+          <h1 class="hero__title">Event loop и асинхронная разработка</h1>
+          <p class="hero__text">Механизмы написания асинхронного кода:</p>
+          <ol class="hero__list hero-list">
+            <li class="hero-list__item">
+              <a class="hero-list__link link" href="#set">Передача функции в&nbsp;качестве аргумента (события, setTimeout/setInterval)</a>
+            </li>
+            <li class="hero-list__item">
+              <a class="hero-list__link link" href="#async">Async/await</a>
+            </li>
+            <li class="hero-list__item">
+              <a class="hero-list__link link" href="#promise">Promise (обещание)</a>
+            </li>
+          </ol>
+        </div>
+      </section>
+      <section id="set" class="set bg-color">
+        <div class="set__container">
+          <h2 class="hero-list__text">
+            Передача функции в&nbsp;качестве аргумента (события, setTimeout/setInterval)
+          </h2>
+          <pre>
+<i>// запустится один через 3&nbsp;секунды после объявления</i>
+setTimeout(() =&gt; {
+  console.log(&quot;setTimeout&quot;);
+}, 3000);
+
+<i>// будет запускаться каждые 4&nbsp;секунды после объявления</i>
+setInterval(() =&gt; {
+  console.log(&quot;setInterval&quot;);
+}, 4000);
+          </pre>
+        </div>
+      </section>
+      <section id="async" class="async">
+        <div class="async__container">
+          <h2>
+            Async/await
+          </h2>
+          <pre>
+async function loadPostList() {
+  const res = await fetch('https://gorest.co.in/public-api/posts');
+  const list = await res.json();
+  document.body.innerHTML = list.data.map(item =&gt; item.title).join('&lt;br&gt;');
+}
+loadPostList();
+document.body.textContent = 'Загрузка...';
+          </pre>
+        </div>
+      </section>
+      <section id="promise" class="promise bg-color">
+        <div class="promise__container">
+          <h2>Promise (обещание)</h2>
+          <p class="promise__text">
+            <strong>Promise((resolve, reject) =&gt; {})</strong> - загрузка одного промиса
+          </p>
+          <p class="promise__text">
+            <strong>Promise.all(([promise1, promise2]) =&gt; {})</strong> - загрузка нескольких промисов из разных источников
+          </p>
+          <p class="promise__text">
+            <strong>fetch(url)</strong> - автоматически создаёт Promise
+          </p>
+          <p class="promise__text">
+            <code>let promise1 = new Promise((resolve, reject) =&gt; {}) <i>// создание вручную</i></code>
+          </p>
+          <p class="promise__text">
+            Обещание (<strong>Promise</strong>) в&nbsp;JavaScript&nbsp;&mdash; это объект, представляющий результат асинхронной операции, который может быть успешно выполнен или завершится с&nbsp;ошибкой в&nbsp;будущем.
+          </p>
+          <p class="promise__text">
+            Обещание может находиться в&nbsp;одном из&nbsp;трех состояний
+          </p>
+          <ul class="promise__list promise-list">
+            <li class="promise-list__item">
+              <strong class="promise-list__text">pending</strong> - <i>в процессе выполнения (в памяти pending)</i>
+            </li>
+            <li class="promise-list__item">
+              <strong class="promise-list__text">resolve</strong> - <i>завершено успешно (в памяти fulfilled)</i>
+            </li>
+            <li class="promise-list__item">
+              <strong class="promise-list__text">reject</strong> - <i>завершено с ошибкой (в памяти rejected)</i>
+            </li>
+          </ul>
+          <p class="promise__text">
+            <code>const fetchJson = url =&gt; fetch(url).then(res =&gt; res.json());</code> <i>// функция возращает json</i>
+          </p>
+          <ol class="promise__stages stages">
+            <li class="stages__item">
+              <strong class="stages__text">Promise() вариант №1</strong>
+              <iframe height="700" style="width: 100%;" scrolling="no" title="Promise() akaFetch()" src="https://codepen.io/archicolt/embed/yLmgNvy?default-tab=js&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+                See the Pen <a href="https://codepen.io/archicolt/pen/yLmgNvy">
+                  Promise() akaFetch()</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                on <a href="https://codepen.io">CodePen</a>.
+              </iframe>
+              <br>
+              <br>
+              <strong class="stages__text">Promise() вариант №2</strong>
+              <iframe height="720" style="width: 100%;" scrolling="no" title="promise()" src="https://codepen.io/archicolt/embed/poMRJLv?default-tab=js&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+                See the Pen <a href="https://codepen.io/archicolt/pen/poMRJLv">
+                  promise()</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                on <a href="https://codepen.io">CodePen</a>.
+              </iframe>
+              <br><br>
+              <strong>Promise() вариант №3 (SkillBox)</strong>
+              <pre>
+let cssPromise = null
+
+function loadModalCss() {
+  if (cssPromise) return cssPromise
+  cssPromise = new Promise(resolve =&gt; {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = './styles.css'
+    link.addEventListener('load', () =&gt; {
+      resolve()
+    })
+    document.head.append(link)
+    cssPromise = true
+  })
+  return cssPromise
+}
+
+async function askConfirmation(text = 'Вы уверены?') {
+  await loadModalCss()
+
+  return new Promise(resolve =&gt; {
+    const root = document.getElementById('root')
+    const btnYes = root.getElementById('done')
+    const btnNo = root.getElementById('no')
+
+    root.classList.add('modal-root')
+
+    btnYes.addEventListener('click', () =&gt; {
+      resolve(true)
+      root.classList.remove('modal-root')
+    })
+    btnNo.addEventListener('click', () =&gt; {
+      resolve(false)
+      root.classList.remove('modal-root')
+    })
+
+    document.body.append(root)
+  })
+}
+
+document.getElementById('btn').addEventListener('click', async () =&gt; {
+  const confirmed = await askConfirmation()
+  console.log(confirmed);
+})
+              </pre>
+            </li>
+            <br>
+            <li class="stahes__item">
+              <strong class="stages__text">fetch() - автоматически создаёт Promise</strong>
+              <iframe height="350" style="width: 100%;" scrolling="no" title="fetch()" src="https://codepen.io/archicolt/embed/NWQdqvJ?default-tab=js&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+                See the Pen <a href="https://codepen.io/archicolt/pen/NWQdqvJ">
+                  fetch()</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+                on <a href="https://codepen.io">CodePen</a>.
+              </iframe>
+            </li>
+          </ol>
+        </div>
+      </section>
+      <section id="promiseall" class="promiseall">
+        <div class="promiseall__container">
+          <h2 class="promiseall__title">Promise.all</h2>
+          <strong class="stages__text">Promise.all #1</strong>
+          <iframe height="550" style="width: 100%;" scrolling="no" title="Promise.all" src="https://codepen.io/archicolt/embed/qBejeXY?default-tab=js&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+            See the Pen <a href="https://codepen.io/archicolt/pen/qBejeXY">
+              Promise.all</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+            on <a href="https://codepen.io">CodePen</a>.
+          </iframe>
+          <br><br>
+          <strong class="stages__text">Promise.all() и Promise.race() Вариант #2</strong>
+          <iframe height="550" style="width: 100%;" scrolling="no" title="Promise.all Promise.race" src="https://codepen.io/archicolt/embed/WNVRvOW?default-tab=js&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+            See the Pen <a href="https://codepen.io/archicolt/pen/WNVRvOW">
+              Promise.all Promise.race</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+            on <a href="https://codepen.io">CodePen</a>.
+          </iframe>
+          <br><br>
+          <strong class="stages__text">Promise.all() Вариант #3</strong>
+          <iframe height="740" style="width: 100%;" scrolling="no" title="Promise.all" src="https://codepen.io/archicolt/embed/wvVgaJQ?default-tab=js&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+            See the Pen <a href="https://codepen.io/archicolt/pen/wvVgaJQ">
+              Promise.all</a> by Салават (<a href="https://codepen.io/archicolt">@archicolt</a>)
+            on <a href="https://codepen.io">CodePen</a>.
+          </iframe>
+          <br>
+          <br>
+          <strong class="stages__text">Promise.all() Вариант #4 (SkillBox)</strong>
+          <pre>
+function fetchJson(url) {
+  return fetch(url).then((res) =&gt; res.json());
+}
+<i>// res - это результат промиса fetch(url)</i>
+<i>// res.json() возвращает новый промис и преобразует в json</i>
+
+
+function getPostData(id) {
+  return Promise.all([
+    fetchJson(`/api/posts/${id}`),
+    fetchJson(`/api/posts/${id}/comments`),
+    fetchJson(`/api/profile`)
+  ]).then(([post, comments, profile]) =&gt; {
+    return { post, comments, profile };
+  });
+}
+              </pre>
+          <br>
+          <strong class="stages__text">Promise.all() (SkillBox)</strong>
+          <pre>
+fetch('/api/user')
+.then(res =&gt; res.json())
+.then(json =&gt; fetch(`/api/users/${json.id}/comments`))
+.then(res =&gt; res.json())
+.then(comments =&gt; {
+  console.log(comments)
+})
+
+Promise.all([
+  fetch.('/api/user').then(res =&gt; json()),
+  fetch('/api/posts/12').then(res =&gt; res.json()),
+]).then(([user, post]) =&gt; {
+  console.log(user, post)
+})
+
+new Promise(resolve =&gt; {
+  const script = document.createElement('script')
+  script.src = './scripts.js'
+  document.head.append(script)
+  script.addEventListener('load', () =&gt; resolve())
+})
+              </pre>
+        </div>
+      </section>
+      <section id="event" class="event">
+        <div class="event__container">
+          <h2 class="event__title">Event loop</h2>
+          <p class="event__descr">
+            <strong>Event loop</strong>&nbsp;&mdash; это механизм в&nbsp;JavaScript, который управляет выполнением кода асинхронно. Он&nbsp;отвечает за&nbsp;обработку событий, таких как запросы к&nbsp;серверу, события мыши или клавиатуры, а&nbsp;также таймеры и&nbsp;другие асинхронные операции.
+          </p>
+          <p class="event__heading">
+            <strong>Алгоритм работы event loop:</strong>
+          </p>
+          <ol class="event__algorithm algorithm-list">
+            <li class="algorithm-list__item">
+              Получаем следующую задачу из очереди макрозадач.
+            </li>
+            <li class="algorithm-list__item">
+              Выполняем макрозадачу.
+            </li>
+            <li class="algorithm-list__item">
+              Выполняем все микрозадачи, попавшие в очередь после выполнения макрозадачи.
+            </li>
+            <li class="algorithm-list__item">
+              Переходим к п. 1
+            </li>
+          </ol>
+          <p class="event__descr">
+            В&nbsp;основе Event loop лежит очередь задач (tasks queue), в&nbsp;которую помещаются асинхронные операции, такие как запросы к&nbsp;серверу или таймеры. Когда JavaScript выполняет синхронный код, он&nbsp;не&nbsp;может выполнять асинхронные операции, поскольку они могут занять много времени и&nbsp;блокировать выполнение кода.
+          </p>
+          <p class="event__descr">
+            <strong>Event loop работает следующим образом (подробно):</strong>
+          </p>
+          <ol class="event__list event-list">
+            <li class="event-list__item">
+              <p class="event-list__descr">Синхронный код выполняется по&nbsp;порядку, пока не&nbsp;встречается асинхронная операция.</p>
+            </li>
+            <li class="event-list__item">
+              <p class="event-list__descr">Когда встречается асинхронная операция, она добавляется в&nbsp;очередь задач.</p>
+            </li>
+            <li class="event-list__item">
+              <p class="event-list__descr">Event loop проверяет, есть&nbsp;ли в&nbsp;очереди задач. Если есть, он&nbsp;выбирает первую задачу и&nbsp;выполняет&nbsp;ее.</p>
+            </li>
+            <li class="event-list__item">
+              <p class="event-list__descr">Асинхронная операция выполняется в&nbsp;фоновом режиме, пока Event loop продолжает выполнять следующую синхронную операцию.</p>
+            </li>
+            <li class="event-list__item">
+              <p class="event-list__descr">Когда асинхронная операция завершается, она добавляет результат в&nbsp;очередь задач.</p>
+            </li>
+            <li class="event-list__item">
+              <p class="event-list__descr">Event loop проверяет, есть&nbsp;ли в&nbsp;очереди задач. Если есть, он&nbsp;выбирает следующую задачу и&nbsp;выполняет&nbsp;ее.</p>
+            </li>
+            <li class="event-list__item">
+              <p class="event-list__descr">Процесс повторяется, пока не&nbsp;закончатся асинхронные операции в&nbsp;очереди задач.</p>
+            </li>
+          </ol>
+          <p class="event__descr">
+            Event loop позволяет JavaScript выполнять асинхронные операции, не&nbsp;блокируя синхронный код, что делает его более эффективным и&nbsp;удобным для работы с&nbsp;асинхронными данными.
+          </p>
+          <pre>
+console.log("1");
+
+setTimeout(() =&gt; console.log("6"));
+
+(async () =&gt; {
+  const promise = new Promise((resolve) =&gt; {
+    console.log("2");
+    resolve();
+  });
+  await promise;
+  console.log("4");
+})();
+
+queueMicrotask(() =&gt; console.log("5"));
+
+console.log("3");
+
+<i>
+// 1
+// 2
+// 3
+// 4
+// 5
+// 6
+</i>
+          </pre>
+          <p class="event__descr">
+            <strong>Макрозадачи и микрозадачи в js</strong> - это механизмы для управления асинхронными операциями.
+          </p>
+          <p class="event__descr">
+            <strong>Микрозадачи</strong> (например, промисы и&nbsp;MutationObserver) имеют приоритет и&nbsp;обрабатываются непосредственно после текущего выполнения скрипта и&nbsp;перед следующим макрозадачами, что позволяет быстро реагировать на&nbsp;изменения.
+          </p>
+          <p class="event__descr">
+            <strong>Макрозадачи</strong> (например, setTimeout, setInterval и&nbsp;I/O (ввод/вывод)) планируются для выполнения на&nbsp;следующих циклах событий, обеспечивая более крупные блоки асинхронной работы.
+          </p>
+          <p class="event__descr">
+            Эта модель&nbsp;JS помогает эффективно управлять выполнением задач, поддерживая при этом отзывчивость интерфейса.
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer__container">
+        <p class="footer__text">© SSR</p>
+      </div>
+    </footer>
+    <a href="#top" id="back-to-top" class="back-to-top link" title="Back to top">▲</a>
+  </div>
+</body>
+
+</html>
